@@ -14,10 +14,12 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import me.usainsrht.ujobs.UJobsPlugin;
 import me.usainsrht.ujobs.models.Job;
 import me.usainsrht.ujobs.models.PlayerJobData;
+import me.usainsrht.ujobs.storage.SqliteStorage;
 import me.usainsrht.ujobs.utils.JobExpUtils;
 import me.usainsrht.ujobs.utils.MessageUtil;
 import me.usainsrht.ujobs.yaml.YamlCommand;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class MainCommand {
@@ -42,6 +44,36 @@ public class MainCommand {
                             plugin.getJobManager().loadJobs();
 
                             MessageUtil.send(context.getSource().getSender(), plugin.getConfigManager().getMessage("reload"));
+
+                            return Command.SINGLE_SUCCESS;
+                        })
+                )
+                .then(Commands.literal("migrate")
+                        .requires(context -> context.getSender().hasPermission("ujobs.admin.migrate"))
+                        .executes(context -> {
+                            java.io.File dbFile = new java.io.File(plugin.getDataFolder(), "ujobs.db");
+                            if (dbFile.exists()) {
+                                context.getSource().getSender().sendMessage(Component.text("§6[UJobs] UJobs is already migrated!"));
+                                return Command.SINGLE_SUCCESS;
+                            }
+
+                            context.getSource().getSender().sendMessage(Component.text("§6[UJobs] Starting migration from PDC and YAML to SQLite database..."));
+
+                            if (plugin.getStorage() instanceof SqliteStorage sqliteStorage) {
+                                // Run migration off the main server thread to avoid blocking
+                                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                                    try {
+                                        sqliteStorage.migrateData();
+                                    } catch (Exception e) {
+                                        plugin.getLogger().severe("Migration failed: " + e.getMessage());
+                                    }
+                                    // Notify sender on the main thread when done
+                                    Bukkit.getScheduler().runTask(plugin, () -> context.getSource().getSender().sendMessage(Component.text("§a[UJobs] Migration complete! All player data has been migrated to the database.")));
+                                });
+                            } else {
+                                context.getSource().getSender().sendMessage(Component.text("§c[UJobs] Error: Storage is not using SQLite! Migration only works with SQLite storage."));
+                                return -1;
+                            }
 
                             return Command.SINGLE_SUCCESS;
                         })
