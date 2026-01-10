@@ -83,6 +83,48 @@ public class PDCStorage implements Storage {
         return new PlayerJobData.JobStats(level, exp, totalMoney);
     }
 
+    /**
+     * Parse a textual NBT-inner block (the contents of the ujobs compound) into PlayerJobData.
+     * This mirrors the logic used when deserializing from a live PersistentDataContainer.
+     */
+    public PlayerJobData parseFromText(UUID uuid, String inner) {
+        PlayerJobData result = new PlayerJobData(uuid);
+        java.util.regex.Pattern anyJobPattern = java.util.regex.Pattern.compile("([a-zA-Z0-9_:\\-]+)\\s*[:=]\\s*\\{([^}]*)\\}", java.util.regex.Pattern.DOTALL);
+        java.util.regex.Matcher anyMatcher = anyJobPattern.matcher(inner);
+        while (anyMatcher.find()) {
+            String rawKey = anyMatcher.group(1);
+            String jobKey = rawKey.startsWith("ujobs:") ? rawKey.substring("ujobs:".length()) : rawKey;
+            String jobBody = anyMatcher.group(2);
+            java.util.regex.Matcher levelM = java.util.regex.Pattern.compile("level\\s*[:=]\\s*([0-9]+)").matcher(jobBody);
+            java.util.regex.Matcher expM = java.util.regex.Pattern.compile("(?:exp|xp)\\s*[:=]\\s*([0-9]+(?:\\.[0-9]+)?)").matcher(jobBody);
+            int level = -1;
+            double exp = 0.0;
+            if (levelM.find()) level = Integer.parseInt(levelM.group(1));
+            if (expM.find()) exp = Double.parseDouble(expM.group(1));
+
+            // If level missing but exp present, compute level via job config
+            me.usainsrht.ujobs.models.Job job = plugin.getJobManager().getJobs().get(jobKey);
+            if ((level < 0 || level == 0) && exp > 0 && job != null) {
+                int computedLevel = 0;
+                double accumulated = 0.0;
+                while (true) {
+                    double need = job.calculateExpForLevel(computedLevel);
+                    if (accumulated + need > exp) break;
+                    accumulated += need;
+                    computedLevel++;
+                }
+                double expForCurrent = exp - accumulated;
+                level = computedLevel;
+                exp = expForCurrent;
+            } else if (level < 0) {
+                level = 0;
+            }
+
+            result.setJobStats(jobKey, new PlayerJobData.JobStats(level, exp, 0.0));
+        }
+        return result;
+    }
+
     @Override
     public void save() {
         //plugin.getLogger().info("Saving cache job data to PDC storage.");
@@ -112,25 +154,63 @@ public class PDCStorage implements Storage {
 
         Player player = Bukkit.getPlayer(uuid);
         if (player != null && player.isOnline()) {
+            plugin.getLogger().info("PDCStorage.load: starting async load for " + uuid);
             player.getScheduler().run(plugin, task -> {
+                plugin.getLogger().info("PDCStorage.load: async task running for " + uuid);
                 //success
                 PersistentDataContainer pdc = player.getPersistentDataContainer();
                 PlayerJobData playerJobData;
                 if (pdc.has(TAG_JOBS_DATA)) {
-                    playerJobData = deserialize(uuid, pdc.get(TAG_JOBS_DATA, PersistentDataType.TAG_CONTAINER));
+                    // If the player has PDC data, deserialize and use it (authoritative).
+                    plugin.getLogger().info("PDCStorage.load: found PDC data for " + uuid);
+                    PlayerJobData deserialized = deserialize(uuid, pdc.get(TAG_JOBS_DATA, PersistentDataType.TAG_CONTAINER));
+                    
+                    // Merge with YAML cache: if YAML has jobs missing from deserialized PDC, add them.
+                    // This handles cases where PDC has partial/old data and YAML has updated levels.
+                    PlayerJobData existing = cache.get(uuid);
+                    if (existing != null) {
+                        for (Map.Entry<String, PlayerJobData.JobStats> yamlEntry : existing.getJobStats().entrySet()) {
+                            String jobId = yamlEntry.getKey();
+                            // Always use YAML version if available (YAML is authoritative from leaderboard.yml)
+                            deserialized.setJobStats(jobId, yamlEntry.getValue());
+                        }
+                        plugin.getLogger().info("PDCStorage.load: merged all jobs from YAML for " + uuid);
+                    }
+                    
+                    playerJobData = deserialized;
+                    cache.put(uuid, playerJobData);
                 } else {
-                    playerJobData = new PlayerJobData(uuid);
+                    plugin.getLogger().info("PDCStorage.load: no PDC data found for " + uuid + ", cache currently has " + cache.size() + " entries");
+                    // If there's no PDC data but the cache already contains data (e.g. populated
+                    // from leaderboard.yml at startup), preserve that cached data instead of
+                    // overwriting it with an empty PlayerJobData. This prevents YAML-loaded
+                    // levels from being lost when the player joins.
+                    PlayerJobData existing = cache.get(uuid);
+                    if (existing != null) {
+                        playerJobData = existing;
+                        // Diagnostic: log that we preserved YAML cache
+                        StringBuilder jobLevels = new StringBuilder();
+                        for (Map.Entry<String, PlayerJobData.JobStats> statsEntry : existing.getJobStats().entrySet()) {
+                            jobLevels.append(statsEntry.getKey()).append("=").append(statsEntry.getValue().getLevel()).append(" ");
+                        }
+                        plugin.getLogger().info("PDCStorage.load: preserved YAML-populated cache for " + uuid + " with jobs: " + jobLevels.toString().trim());
+                    } else {
+                        playerJobData = new PlayerJobData(uuid);
+                        cache.put(uuid, playerJobData);
+                        plugin.getLogger().info("PDCStorage.load: created empty cache entry for " + uuid);
+                    }
                 }
-                cache.put(uuid, playerJobData);
                 future.complete(playerJobData);
+                plugin.getLogger().info("PDCStorage.load: completed async load for " + uuid);
             }, () -> {
                 //fail
-                plugin.getLogger().warning("Can't load data of " + uuid + "! storage: PDC");
+                plugin.getLogger().warning("PDCStorage.load: async task failed for " + uuid + "! storage: PDC");
                 future.cancel(false);
             });
         } else {
             //todo implement offlineplayer data load
             //currently not needed
+            plugin.getLogger().warning("PDCStorage.load: player " + uuid + " not found online");
         }
 
         return future;

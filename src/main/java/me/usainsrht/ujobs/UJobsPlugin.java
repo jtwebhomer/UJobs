@@ -10,11 +10,10 @@ import me.usainsrht.ujobs.listeners.JoinListener;
 import me.usainsrht.ujobs.listeners.QuitListener;
 import me.usainsrht.ujobs.listeners.SaveListener;
 import me.usainsrht.ujobs.listeners.job_actions.*;
-import me.usainsrht.ujobs.listeners.job_actions.timber.TreeFallListener;
 import me.usainsrht.ujobs.managers.*;
 import me.usainsrht.ujobs.models.BuiltInActions;
 import me.usainsrht.ujobs.placeholders.JobPlaceholders;
-import me.usainsrht.ujobs.storage.PDCStorage;
+import me.usainsrht.ujobs.storage.SqliteStorage;
 import me.usainsrht.ujobs.storage.Storage;
 import me.usainsrht.ujobs.yaml.YamlCommand;
 import me.usainsrht.ujobs.yaml.YamlMessage;
@@ -52,9 +51,20 @@ public final class UJobsPlugin extends JavaPlugin {
 
         setupEconomy();
 
-        this.storage = new PDCStorage(this);
+        this.storage = new SqliteStorage(this);
+        // Create rotating backups of the database on startup (keeps up to 2 backups)
+        if (this.storage instanceof SqliteStorage sqlite) {
+            sqlite.createDatabaseBackups();
+            // Attempt to recover any incomplete migrations from previous crashes
+            sqlite.checkAndRecoverMigration();
+        }
 
         initializeManagers();
+
+        // After managers and leaderboard are loaded, preload offline PDC for players missing leaderboard entries
+        if (this.storage instanceof SqliteStorage sqlite) {
+            sqlite.preloadOfflinePdcToCache();
+        }
 
         registerEventsAndCommands();
 
@@ -69,14 +79,32 @@ public final class UJobsPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Flush all online players' XP to cache before saving
+        getServer().getOnlinePlayers().forEach(player -> {
+            if (storage != null) {
+                storage.save(player.getUniqueId());
+            }
+        });
 
-        // Save all data
+        // Save all data: persist online players' data and write their exp to leaderboard.yml
         if (storage != null) {
             storage.save();
         }
 
-        if (leaderboardManager != null) leaderboardManager.save(); //saves to cache
-        if (configManager != null) configManager.saveLeaderboard(); //writes it
+        if (leaderboardManager != null) {
+            // Persist per-online-player exp/levels to leaderboard.yml to avoid global overwrite
+            getServer().getOnlinePlayers().forEach(p -> {
+                try {
+                    leaderboardManager.saveExpForPlayer(p.getUniqueId());
+                } catch (Exception ignored) {}
+            });
+        }
+        if (configManager != null) configManager.saveLeaderboard(); // write leaderboard.yml once
+
+        // Close database if open (after saving)
+        if (storage instanceof SqliteStorage sqliteStorage) {
+            sqliteStorage.closeDatabase();
+        }
 
         // Cancel all boss bars
         if (bossBarManager != null) {
@@ -117,9 +145,6 @@ public final class UJobsPlugin extends JavaPlugin {
         // job listeners
         if (jobManager.getActionJobMap().containsKey(BuiltInActions.Material.BREAK)) {
             getServer().getPluginManager().registerEvents(new BreakListener(jobManager), this);
-            if (getServer().getPluginManager().isPluginEnabled("UltimateTimber")) {
-                getServer().getPluginManager().registerEvents(new TreeFallListener(jobManager), this);
-            }
         }
         if (jobManager.getActionJobMap().containsKey(BuiltInActions.Material.PLACE)) {
             getServer().getPluginManager().registerEvents(new PlaceListener(jobManager), this);
@@ -145,6 +170,9 @@ public final class UJobsPlugin extends JavaPlugin {
         if (jobManager.getActionJobMap().containsKey(BuiltInActions.Special.GENERATE_LOOT)) {
             getServer().getPluginManager().registerEvents(new LootGenerateListener(jobManager), this);
         }
+        // Register TravelListener unconditionally to listen for block movement
+        getServer().getPluginManager().registerEvents(new TravelListener(jobManager), this);
+        getLogger().info("TravelListener registered for travel job tracking");
         if (jobManager.getActionJobMap().containsKey(BuiltInActions.Material.TRADE)) {
             getServer().getPluginManager().registerEvents(new TradeListener(jobManager), this);
         }

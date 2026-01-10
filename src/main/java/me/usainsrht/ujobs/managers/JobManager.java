@@ -167,10 +167,27 @@ public class JobManager {
         PlayerJobData playerJobData = plugin.getStorage().getCached(player.getUniqueId());
         if (playerJobData == null) return; //job data has to be loaded at this point
 
+        // Diagnostic logging removed to reduce log noise
+
         Job.ActionReward reward = job.getActionReward(action, value.toLowerCase(Locale.ROOT));
+
+        // Special handling for amount-based actions like TRAVEL: if there's no
+        // exact match by value, attempt to resolve a numeric threshold reward
+        // based on the provided amount (e.g. keys like "100" in jobs.yml).
+        if (reward == null) {
+            try {
+                if (action.getName().equalsIgnoreCase("travel")) {
+                    reward = job.getActionRewardForAmount(action, amount);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
         if (reward == null) return;
 
         JobExpUtils.processJobExp(player, job, reward, amount);
+
+        // Diagnostic logging removed to reduce log noise
 
     }
 

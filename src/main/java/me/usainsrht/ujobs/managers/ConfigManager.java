@@ -55,6 +55,7 @@ public class ConfigManager {
             }
         }
         leaderboardConfig = YamlConfiguration.loadConfiguration(leaderBoardFile);
+        plugin.getLogger().info("ConfigManager: loaded leaderboard.yml from " + leaderBoardFile.getAbsolutePath());
     }
 
     public void loadMessages() {

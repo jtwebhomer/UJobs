@@ -45,7 +45,8 @@ public class BuiltInActions {
 
         ENCHANT("enchant"),
         GENERATE_LOOT("generate_loot"),
-        RAID("raid");
+        RAID("raid"),
+        TRAVEL("travel");
 
         final String name;
         Special(String name) {

@@ -61,6 +61,51 @@ public class Job {
         return actionMap != null ? actionMap.get(value) : null;
     }
 
+    /**
+     * For actions that use numeric thresholds (like travel), find the largest
+     * configured threshold that is <= the provided amount and return its reward.
+     */
+    public ActionReward getActionRewardForAmount(Action action, int amount) {
+        Map<String, ActionReward> actionMap = actions.get(action);
+        if (actionMap == null) return null;
+
+        int best = -1;
+        ActionReward bestReward = null;
+        for (String key : actionMap.keySet()) {
+            try {
+                int threshold = Integer.parseInt(key);
+                if (threshold <= amount && threshold > best) {
+                    best = threshold;
+                    bestReward = actionMap.get(key);
+                }
+            } catch (NumberFormatException ignored) {
+                // non-numeric keys are ignored for amount-based lookups
+            }
+        }
+        return bestReward;
+    }
+
+    /**
+     * Return the numeric threshold key (largest <= amount) for the given action,
+     * or -1 if none exists.
+     */
+    public int getBestThresholdForAmount(Action action, int amount) {
+        Map<String, ActionReward> actionMap = actions.get(action);
+        if (actionMap == null) return -1;
+
+        int best = -1;
+        for (String key : actionMap.keySet()) {
+            try {
+                int threshold = Integer.parseInt(key);
+                if (threshold <= amount && threshold > best) {
+                    best = threshold;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return best;
+    }
+
     public long calculateExpForLevel(int level) {
         String equation = levelEquation.replace("<level>", String.valueOf(level))
                 .replace("<next_level>", String.valueOf(level + 1));

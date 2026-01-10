@@ -12,10 +12,12 @@ public class PlayerLeaderboardData {
 
     UUID uuid;
     Map<Job, LeaderboardStats> leaderboardStats;
+    public String displayName;
 
     public PlayerLeaderboardData(UUID uuid) {
         this.uuid = uuid;
         this.leaderboardStats = new HashMap<>();
+        this.displayName = null;
     }
 
     @Getter
