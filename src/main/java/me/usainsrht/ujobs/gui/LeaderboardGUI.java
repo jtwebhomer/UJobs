@@ -152,20 +152,35 @@ public class LeaderboardGUI implements JobGUI {
 
         // Top list placeholders
         UUID[] topPlayers = plugin.getLeaderboardManager().getLeaderboardJobCache().get(job);
+        // If the cached array is missing or empty, try rebuilding from the leaderboardPlayerCache
+        if (topPlayers == null || topPlayers.length == 0 || topPlayers[0] == null) {
+            UUID[] rebuilt = plugin.getLeaderboardManager().createLeaderboardFromCache(job);
+            if (rebuilt != null) {
+                topPlayers = rebuilt;
+                plugin.getLeaderboardManager().getLeaderboardJobCache().put(job, rebuilt);
+            }
+        }
         for (int s = 1; s <= listAmount; s++) {
             int r = (s + min) - 2;
 
             String playerName = "?";
             String level = "?";
 
-            if (topPlayers != null && r < topPlayers.length && topPlayers[r] != null) {
+            if (topPlayers != null && r >= 0 && r < topPlayers.length && topPlayers[r] != null) {
                 UUID playerUuid = topPlayers[r];
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUuid);
-                playerName = offlinePlayer.getName() != null ? offlinePlayer.getName() : "?";
+                if (playerUuid != null) {
+                    PlayerLeaderboardData leaderboardData = plugin.getLeaderboardManager().getLeaderboardPlayerCache().get(playerUuid);
+                    if (leaderboardData != null && leaderboardData.displayName != null) {
+                        playerName = leaderboardData.displayName;
+                    } else {
+                        String resolved = plugin.getLeaderboardManager().resolvePlayerName(playerUuid);
+                        playerName = resolved != null ? resolved : "?";
+                    }
 
-                PlayerLeaderboardData leaderboardData = plugin.getLeaderboardManager().getLeaderboardPlayerCache().get(playerUuid);
-                if (leaderboardData != null && leaderboardData.getLeaderboardStats().containsKey(job)) {
-                    level = String.valueOf(leaderboardData.getLeaderboardStats().get(job).getLevel());
+                    PlayerLeaderboardData leaderboardData2 = plugin.getLeaderboardManager().getLeaderboardPlayerCache().get(playerUuid);
+                    if (leaderboardData2 != null && leaderboardData2.getLeaderboardStats().containsKey(job)) {
+                        level = String.valueOf(leaderboardData2.getLeaderboardStats().get(job).getLevel());
+                    }
                 }
             }
 
