@@ -36,14 +36,19 @@ public class MainJobGUI implements JobGUI {
     public static final NamespacedKey jobKey = new NamespacedKey("ujobs", "job_id");
 
     public MainJobGUI(UJobsPlugin plugin, UUID uuid) {
+        this.uuid = uuid;
         int rows = (int)Math.ceil(plugin.getJobManager().getJobs().size() / 7f) + 2;
         Component title = plugin.getMiniMessage().deserialize(plugin.getConfig().getString("gui.title"));
         this.inventory = Bukkit.createInventory(this, rows*9, title);
 
         String blankMaterial = plugin.getConfig().getString("gui.blank_material", null);
         if (blankMaterial != null && !blankMaterial.isEmpty() && !blankMaterial.equalsIgnoreCase("air")) {
-            ItemStack blankItem = new ItemStack(Material.matchMaterial(blankMaterial));
-            blankItem.editMeta(meta -> meta.setHideTooltip(true));
+            Material m = Material.matchMaterial(blankMaterial);
+            if (m == null) m = Material.STONE;
+            ItemStack blankItem = new ItemStack(m);
+            if (blankItem.getItemMeta() != null) {
+                blankItem.editMeta(meta -> meta.setHideTooltip(true));
+            }
             for (int i = 0; i < inventory.getSize(); i++) {
                 inventory.setItem(i, blankItem);
             }
@@ -95,24 +100,31 @@ public class MainJobGUI implements JobGUI {
             placeholderSet.add(Placeholder.unparsed("position", positionText));
             TagResolver[] placeholders = placeholderSet.toArray(new TagResolver[]{});
 
-            ItemStack item = new ItemStack(job.getIcon());
-            item.editMeta(meta -> {
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            Material iconMat = job.getIcon() != null ? job.getIcon() : Material.STONE;
+            ItemStack item = new ItemStack(iconMat);
+            if (item.getItemMeta() != null) {
+                item.editMeta(meta -> {
+                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
-                Component name = plugin.getMiniMessage().deserialize(plugin.getConfig().getString("gui.jobitem.name"), placeholders)
-                        .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
-                meta.displayName(name);
+                    try {
+                        Component name = plugin.getMiniMessage().deserialize(plugin.getConfig().getString("gui.jobitem.name"), placeholders)
+                                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+                        meta.displayName(name);
+                    } catch (Exception ignored) {}
 
-                List<Component> lore = new ArrayList<>();
-                plugin.getConfig().getStringList("gui.jobitem.lore").forEach(line -> {
-                    Component component = plugin.getMiniMessage().deserialize(line, placeholders)
-                            .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
-                    lore.add(component);
+                    try {
+                        List<Component> lore = new ArrayList<>();
+                        plugin.getConfig().getStringList("gui.jobitem.lore").forEach(line -> {
+                            Component component = plugin.getMiniMessage().deserialize(line, placeholders)
+                                    .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+                            lore.add(component);
+                        });
+                        meta.lore(lore);
+                    } catch (Exception ignored) {}
+
+                    try { meta.getPersistentDataContainer().set(jobKey, PersistentDataType.STRING, jobId); } catch (Exception ignored) {}
                 });
-                meta.lore(lore);
-
-                meta.getPersistentDataContainer().set(jobKey, PersistentDataType.STRING, jobId);
-            });
+            }
 
             int slot = baseSlot + i;
             inventory.setItem(slot, item);

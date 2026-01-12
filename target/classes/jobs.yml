@@ -1,0 +1,1701 @@
+jobs:
+  hunter:
+    name: "<gradient:#FF0000:#A20000>Hunter"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: RED
+    icon: NETHERITE_SWORD
+    levelup_message:
+      #chat: ""
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      kill:
+        zombie:
+          exp: 2
+          money: 0.1
+        skeleton:
+          exp: 2
+          money: 0.1
+        spider:
+          exp: 2
+          money: 0.1
+        creeper:
+          exp: 2
+          money: 0.1
+        cave_spider:
+          exp: 2.1
+          money: 0.12
+        husk:
+          exp: 2.05
+          money: 0.11
+        stray:
+          exp: 2.2
+          money: 0.15
+        drowned:
+          exp: 2.1
+          money: 0.13
+        enderman:
+          exp: 2.5
+          money: 0.15
+        blaze:
+          exp: 2.5
+          money: 0.15
+        elder_guardian:
+          exp: 20
+          money: 5
+        endermite:
+          exp: 3
+          money: 0.3
+        evoker:
+          exp: 5
+          money: 1
+        guardian:
+          exp: 2.3
+          money: 0.17
+        vindicator:
+          exp: 2.9
+          money: 0.14
+        piglin:
+          exp: 2.2
+          money: 0.12
+        piglin_brute:
+          exp: 10
+          money: 7
+        pillager:
+          exp: 2.1
+          money: 0.11
+        ravager:
+          exp: 5
+          money: 2.5
+        silverfish:
+          exp: 1
+          money: 0.01
+        vex:
+          exp: 2
+          money: 0.1
+        warden:
+          exp: 100
+          money: 10
+        witch:
+          exp: 3
+          money: 0.3
+        wither:
+          exp: 50
+          money: 5
+        wither_skeleton:
+          exp: 2.5
+          money: 0.15
+        zoglin:
+          exp: 2.3
+          money: 0.13
+        zombie_villager:
+          exp: 2.3
+          money: 0.13
+        ender_dragon:
+          exp: 250
+          money: 25
+        pig:
+          exp: 1
+          money: 0.01
+        chicken:
+          exp: 1
+          money: 0.01
+        sheep:
+          exp: 1
+          money: 0.01
+        cow:
+          exp: 1
+          money: 0.01
+        cod:
+          exp: 2.2
+          money: 0.18
+        salmon:
+          exp: 2.2
+          money: 0.18
+        pufferfish:
+          exp: 2.9
+          money: 0.29
+        tropical_fish:
+          exp: 2.7
+          money: 0.27
+        horse:
+          exp: 2.1
+          money: 0.12
+        donkey:
+          exp: 2.1
+          money: 0.12
+        wolf:
+          exp: 2.4
+          money: 0.24
+        fox:
+          exp: 4
+          money: 0.4
+        rabbit:
+          exp: 3
+          money: 0.35
+        iron_golem:
+          exp: 5
+          money: 0.5
+        goat:
+          exp: 2.3
+          money: 0.3
+        llama:
+          exp: 2.1
+          money: 0.21
+        squid:
+          exp: 2.7
+          money: 0.27
+        glow_squid:
+          exp: 2.8
+          money: 0.28
+        mooshroom:
+          exp: 5
+          money: 0.5
+        strider:
+          exp: 2.5
+          money: 0.15
+  miner:
+    name: "<gradient:#9B9B9B:#646464>Miner"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: WHITE
+    icon: NETHERITE_PICKAXE
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      break:
+        stone:
+          exp: 0.1
+          money: 0.01
+        deepslate:
+          exp: 0.11
+          money: 0.011
+        coal_ore:
+          exp: 1
+          money: 0.1
+        deepslate_coal_ore:
+          exp: 1.1
+          money: 0.11
+        iron_ore:
+          exp: 1.1
+          money: 0.11
+        deepslate_iron_ore:
+          exp: 1.2
+          money: 0.12
+        copper_ore:
+          exp: 1.2
+          money: 0.12
+        deepslate_copper_ore:
+          exp: 1.3
+          money: 0.13
+        gold_ore:
+          exp: 1.4
+          money: 0.14
+        deepslate_gold_ore:
+          exp: 1.5
+          money: 0.15
+        redstone_ore:
+          exp: 1.3
+          money: 0.13
+        deepslate_redstone_ore:
+          exp: 1.4
+          money: 0.14
+        emerald_ore:
+          exp: 1.6
+          money: 0.16
+        deepslate_emerald_ore:
+          exp: 1.7
+          money: 0.17
+        lapis_ore:
+          exp: 1.5
+          money: 0.15
+        deepslate_lapis_ore:
+          exp: 1.6
+          money: 0.16
+        diamond_ore:
+          exp: 1.7
+          money: 0.17
+        deepslate_diamond_ore:
+          exp: 1.8
+          money: 0.18
+        nether_gold_ore:
+          exp: 1
+          money: 0.1
+        nether_quartz_ore:
+          exp: 1.1
+          money: 0.11
+        netherrack:
+          exp: 0.08
+          money: 0.008
+        gilded_blackstone:
+          exp: 1.2
+          money: 0.12
+        blackstone:
+          exp: 0.1
+          money: 0.01
+        basalt:
+          exp: 0.1
+          money: 0.01
+        end_stone:
+          exp: 0.1
+          money: 0.01
+        diorite:
+          exp: 0.1
+          money: 0.01
+        andesite:
+          exp: 0.1
+          money: 0.01
+        granite:
+          exp: 0.1
+          money: 0.01
+        sandstone:
+          exp: 0.1
+          money: 0.01
+        tuff:
+          exp: 0.1
+          money: 0.01
+        calcite:
+          exp: 0.1
+          money: 0.01
+        smooth_basalt:
+          exp: 0.1
+          money: 0.01
+        amethyst_block:
+          exp: 0.1
+          money: 0.01
+        amethyst_cluster:
+          exp: 0.1
+          money: 0.01
+        ancient_debris:
+          exp: 2
+          money: 0.2
+  farmer:
+    name: "<gradient:#FFD500:#FF9B00>Farmer"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: YELLOW
+    icon: NETHERITE_HOE
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      break:
+        cocoa2:
+          exp: 1.2
+          money: 0.02
+        wheat7:
+          exp: 1
+          money: 0.01
+        potatoes7:
+          exp: 1
+          money: 0.01
+        carrots7:
+          exp: 1
+          money: 0.01
+        beetroots3:
+          exp: 1.1
+          money: 0.011
+        melon:
+          exp: 1
+          money: 0.01
+        #bamboo
+      harvest:
+        glow_berries:
+          exp: 1
+          money: 0.01
+        sweet_berries:
+          exp: 1
+          money: 0.01
+  husbandry:
+    name: "<gradient:#FF00BD:#AA4B00>Husbandry"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: PINK
+    icon: LEAD
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      breed:
+        pig:
+          exp: 1
+          money: 0.01
+        chicken:
+          exp: 1
+          money: 0.01
+        cow:
+          exp: 1
+          money: 0.01
+        sheep:
+          exp: 1
+          money: 0.01
+        horse:
+          exp: 1
+          money: 0.01
+        donkey:
+          exp: 1
+          money: 0.01
+        mule:
+          exp: 1
+          money: 0.01
+        llama:
+          exp: 1
+          money: 0.01
+        trader_llama:
+          exp: 1
+          money: 0.01
+        rabbit:
+          exp: 1
+          money: 0.01
+        fox:
+          exp: 1
+          money: 0.01
+        wolf:
+          exp: 1
+          money: 0.01
+        cat:
+          exp: 1
+          money: 0.01
+        turtle:
+          exp: 1
+          money: 0.01
+        bee:
+          exp: 1
+          money: 0.01
+        camel:
+          exp: 1
+          money: 0.01
+        panda:
+          exp: 1
+          money: 0.01
+        parrot:
+          exp: 1
+          money: 0.01
+        polar_bear:
+          exp: 1
+          money: 0.01
+        frog:
+          exp: 1
+          money: 0.01
+        axolotl:
+          exp: 1
+          money: 0.01
+        mooshroom:
+          exp: 1
+          money: 0.01
+        ocelot:
+          exp: 1
+          money: 0.01
+        strider:
+          exp: 1
+          money: 0.01
+        sniffer:
+          exp: 1
+          money: 0.01
+      tame:
+        wolf:
+          exp: 1
+          money: 0.01
+        cat:
+          exp: 1
+          money: 0.01
+        camel:
+          exp: 1
+          money: 0.01
+        horse:
+          exp: 1
+          money: 0.01
+        mule:
+          exp: 1
+          money: 0.01
+        donkey:
+          exp: 1
+          money: 0.01
+        trader_llama:
+          exp: 1
+          money: 0.01
+        llama:
+          exp: 1
+          money: 0.01
+        parrot:
+          exp: 1
+          money: 0.01
+  fisher:
+    name: "<gradient:#00D8FF:#0A75C8>Fisher"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: BLUE
+    icon: FISHING_ROD
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      fish:
+        cod:
+          exp: 1
+          money: 1
+        salmon:
+          exp: 1
+          money: 1
+        tropical_fish:
+          exp: 3
+          money: 3
+        pufferfish:
+          exp: 2.5
+          money: 2.5
+  witcher:
+    name: "<gradient:#FF00FB:#9B00FF>Witcher"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: PURPLE
+    icon: ENCHANTING_TABLE
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      enchant:
+        1:
+          exp: 1
+          money: 0.1
+        2:
+          exp: 2
+          money: 0.2
+        3:
+          exp: 3
+          money: 0.3
+        4:
+          exp: 4
+          money: 0.4
+        5:
+          exp: 5
+          money: 0.5
+        6:
+          exp: 6
+          money: 0.6
+        7:
+          exp: 7
+          money: 0.7
+        8:
+          exp: 8
+          money: 0.8
+        9:
+          exp: 9
+          money: 0.9
+        10:
+          exp: 10
+          money: 1
+        11:
+          exp: 11
+          money: 1.1
+        12:
+          exp: 12
+          money: 1.2
+        13:
+          exp: 13
+          money: 1.3
+        14:
+          exp: 14
+          money: 1.4
+        15:
+          exp: 15
+          money: 1.5
+        16:
+          exp: 16
+          money: 1.6
+        17:
+          exp: 17
+          money: 1.7
+        18:
+          exp: 18
+          money: 1.8
+        19:
+          exp: 19
+          money: 1.9
+        20:
+          exp: 20
+          money: 2
+        21:
+          exp: 21
+          money: 2.1
+        22:
+          exp: 22
+          money: 2.2
+        23:
+          exp: 23
+          money: 2.3
+        24:
+          exp: 24
+          money: 2.4
+        25:
+          exp: 25
+          money: 2.5
+        26:
+          exp: 26
+          money: 2.6
+        27:
+          exp: 27
+          money: 2.7
+        28:
+          exp: 28
+          money: 2.8
+        29:
+          exp: 29
+          money: 2.9
+        30:
+          exp: 30
+          money: 3
+      anvil_merge:
+        enchanted_book:
+          exp: 1.5
+          money: 1.5
+  lumberjack:
+    name: "<gradient:#CB7800:#00B503>Lumberjack"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: GREEN
+    icon: NETHERITE_AXE
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      break:
+        oak_log:
+          exp: 1
+          money: 0.1
+        birch_log:
+          exp: 1
+          money: 0.1
+        spruce_log:
+          exp: 1
+          money: 0.1
+        dark_oak_log:
+          exp: 1
+          money: 0.1
+        jungle_log:
+          exp: 1
+          money: 0.1
+        acacia_log:
+          exp: 1
+          money: 0.1
+        mangrove_log:
+          exp: 1
+          money: 0.1
+        mangrove_roots:
+          exp: 0.7
+          money: 0.07
+        warped_stem:
+          exp: 1.5
+          money: 0.15
+        crimson_stem:
+          exp: 1.5
+          money: 0.15
+        cherry_log:
+          exp: 1
+          money: 0.1
+        pale_oak_log:
+          exp: 1
+          money: 0.1
+  digger:
+    name: "<gradient:#69A5E8:#AE69E8>Digger"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: BLUE
+    icon: NETHERITE_SHOVEL
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      break:
+        sand:
+          exp: 1
+          money: 0.01
+        red_sand:
+          exp: 1.1
+          money: 0.011
+        clay:
+          exp: 2
+          money: 0.02
+        mud:
+          exp: 1.5
+          money: 0.015
+        gravel:
+          exp: 1.25
+          money: 0.0125
+        mycelium:
+          exp: 2
+          money: 0.02
+        podzol:
+          exp: 1.1
+          money: 0.011
+        coarse_dirt:
+          exp: 1.1
+          money: 0.011
+        dirt:
+          exp: 1
+          money: 0.01
+        grass_block:
+          exp: 1
+          money: 0.01
+        soul_sand:
+          exp: 2
+          money: 0.02
+  gladiator:
+    name: "<gradient:#FF0000:#FFFF00>Gladiator"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: RED
+    icon: NETHERITE_HELMET
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      kill:
+        player:
+          exp: 1
+          money: 0.01
+  guardian:
+    name: "<gradient:#1FFF00:#769072>Guardian"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: GREEN
+    icon: SHIELD
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      raid:
+        win:
+          exp: 10
+          money: 0.1
+        wave:
+          exp: 1
+          money: 0.01
+  producer:
+    name: "<gradient:#A26238:#AF8D5B>Producer"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: WHITE
+    icon: CRAFTING_TABLE
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      craft:
+        piston:
+          exp: 1
+          money: 0.1
+        sticky_piston:
+          exp: 0.1
+          money: 0.1
+        lectern:
+          exp: 1
+          money: 0.1
+        redstone_lamp:
+          exp: 1
+          money: 0.1
+        tnt:
+          exp: 0.5
+          money: 0.05
+        dispenser:
+          exp: 0.5
+          money: 0.05
+        dropper:
+          exp: 0.4
+          money: 0.04
+        target:
+          exp: 1
+          money: 0.1
+        repeater:
+          exp: 1.5
+          money: 0.15
+        comparator:
+          exp: 3
+          money: 0.3
+        daylight_detector:
+          exp: 5
+          money: 0.5
+        note_block:
+          exp: 0.5
+          money: 0.05
+        observer:
+          exp: 1
+          money: 0.1
+        minecart:
+          exp: 0.2
+          money: 0.02
+  trader:
+    name: "<gradient:#0CFF00:#F7FF00>Trader"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: BLUE
+    icon: EMERALD
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      trade:
+        emerald:
+          exp: 1
+          money: 0.1
+  traveler:
+    name: "<gradient:#00AAFF:#00FF13>Traveler"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: BLUE
+    icon: SPYGLASS
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      generate_loot:
+        desert_pyramid:
+          exp: 12.5
+          money: 10
+        abandoned_mineshaft:
+          exp: 10
+          money: 5
+        ancient_city:
+          exp: 50
+          money: 50
+        ancient_city_ice_box:
+          exp: 50
+          money: 50
+        bastion_bridge:
+          exp: 25
+          money: 22
+        bastion_other:
+          exp: 25
+          money: 22
+        bastion_treasure:
+          exp: 50
+          money: 50
+        bastion_hoglin_stable:
+          exp: 25
+          money: 22
+        buried_treasure:
+          exp: 100
+          money: 100
+        end_city_treasure:
+          exp: 20
+          money: 17
+        igloo_chest:
+          exp: 150
+          money: 125
+        jungle_temple:
+          exp: 75
+          money: 60
+        jungle_temple_dispenser:
+          exp: 75
+          money: 60
+        pillager_outpost:
+          exp: 20
+          money: 16
+        ruined_portal:
+          exp: 10
+          money: 7
+        shipwreck_map:
+          exp: 7
+          money: 5
+        shipwreck_supply:
+          exp: 7
+          money: 5
+        shipwreck_treasure:
+          exp: 11
+          money: 9
+        simple_dungeon:
+          exp: 18
+          money: 15
+        stronghold_corridor:
+          exp: 40
+          money: 34
+        stronghold_crossing:
+          exp: 40
+          money: 34
+        stronghold_library:
+          exp: 40
+          money: 34
+        underwater_ruin_big:
+          exp: 10
+          money: 7
+        underwater_ruin_small:
+          exp: 10
+          money: 7
+        village/village_armorer:
+          exp: 5
+          money: 1.5
+        village/village_butcher:
+          exp: 5
+          money: 1.5
+        village/village_cartographer:
+          exp: 5
+          money: 1.5
+        village/village_desert_house:
+          exp: 5
+          money: 1.5
+        village/village_fisher:
+          exp: 5
+          money: 1.5
+        village/village_fletcher:
+          exp: 5
+          money: 1.5
+        village/village_mason:
+          exp: 5
+          money: 1.5
+        village/village_plains_house:
+          exp: 5
+          money: 1.5
+        village/village_savanna_house:
+          exp: 5
+          money: 1.5
+        village/village_shepherd:
+          exp: 5
+          money: 1.5
+        village/village_snowy_house:
+          exp: 5
+          money: 1.5
+        village/village_taiga_house:
+          exp: 5
+          money: 1.5
+        village/village_tannery:
+          exp: 5
+          money: 1.5
+        village/village_temple:
+          exp: 5
+          money: 1.5
+        village/village_toolsmith:
+          exp: 5
+          money: 1.5
+        village/village_weaponsmith:
+          exp: 5
+          money: 1.5
+        woodland_mansion:
+          exp: 5
+          money: 1.5
+        nether_bridge:
+          exp: 5
+          money: 1.5
+        trial_chambers/corridor:
+          exp: 3
+          money: 0.15
+        trial_chambers/entrance:
+          exp: 5
+          money: 0.25
+        trial_chambers/intersection:
+          exp: 3
+          money: 0.15
+        trial_chambers/intersection_barrel:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward:
+          exp: 10
+          money: 1
+        trial_chambers/reward_common:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_ominous:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_ominous_common:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_ominous_rare:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_ominous_unique:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_rare:
+          exp: 1
+          money: 0.1
+        trial_chambers/reward_unique:
+          exp: 1
+          money: 0.1
+        trial_chambers/supply:
+          exp: 1
+          money: 0.1
+  builder:
+    name: "<gradient:#9B9B9B:#646464>Builder"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: WHITE
+    icon: BRICKS
+    levelup_message:
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      place:
+        stone_bricks:
+          exp: 1
+          money: 0.01
+        # Oak
+        oak_log:
+          exp: 1
+          money: 0.01
+        oak_wood:
+          exp: 1
+          money: 0.01
+        stripped_oak_log:
+          exp: 1
+          money: 0.01
+        stripped_oak_wood:
+          exp: 1
+          money: 0.01
+        oak_planks:
+          exp: 1
+          money: 0.01
+        oak_stairs:
+          exp: 1
+          money: 0.01
+        oak_slab:
+          exp: 1
+          money: 0.01
+        oak_fence:
+          exp: 1
+          money: 0.01
+        oak_fence_gate:
+          exp: 1
+          money: 0.01
+        oak_door:
+          exp: 1
+          money: 0.01
+        oak_trapdoor:
+          exp: 1
+          money: 0.01
+        # Birch
+        birch_log:
+          exp: 1
+          money: 0.01
+        birch_wood:
+          exp: 1
+          money: 0.01
+        stripped_birch_log:
+          exp: 1
+          money: 0.01
+        stripped_birch_wood:
+          exp: 1
+          money: 0.01
+        birch_planks:
+          exp: 1
+          money: 0.01
+        birch_stairs:
+          exp: 1
+          money: 0.01
+        birch_slab:
+          exp: 1
+          money: 0.01
+        birch_fence:
+          exp: 1
+          money: 0.01
+        birch_fence_gate:
+          exp: 1
+          money: 0.01
+        birch_door:
+          exp: 1
+          money: 0.01
+        birch_trapdoor:
+          exp: 1
+          money: 0.01
+        # Spruce
+        spruce_log:
+          exp: 1
+          money: 0.01
+        spruce_wood:
+          exp: 1
+          money: 0.01
+        stripped_spruce_log:
+          exp: 1
+          money: 0.01
+        stripped_spruce_wood:
+          exp: 1
+          money: 0.01
+        spruce_planks:
+          exp: 1
+          money: 0.01
+        spruce_stairs:
+          exp: 1
+          money: 0.01
+        spruce_slab:
+          exp: 1
+          money: 0.01
+        spruce_fence:
+          exp: 1
+          money: 0.01
+        spruce_fence_gate:
+          exp: 1
+          money: 0.01
+        spruce_door:
+          exp: 1
+          money: 0.01
+        spruce_trapdoor:
+          exp: 1
+          money: 0.01
+        # Jungle
+        jungle_log:
+          exp: 1
+          money: 0.01
+        jungle_wood:
+          exp: 1
+          money: 0.01
+        stripped_jungle_log:
+          exp: 1
+          money: 0.01
+        stripped_jungle_wood:
+          exp: 1
+          money: 0.01
+        jungle_planks:
+          exp: 1
+          money: 0.01
+        jungle_stairs:
+          exp: 1
+          money: 0.01
+        jungle_slab:
+          exp: 1
+          money: 0.01
+        jungle_fence:
+          exp: 1
+          money: 0.01
+        jungle_fence_gate:
+          exp: 1
+          money: 0.01
+        jungle_door:
+          exp: 1
+          money: 0.01
+        jungle_trapdoor:
+          exp: 1
+          money: 0.01
+        # Acacia
+        acacia_log:
+          exp: 1
+          money: 0.01
+        acacia_wood:
+          exp: 1
+          money: 0.01
+        stripped_acacia_log:
+          exp: 1
+          money: 0.01
+        stripped_acacia_wood:
+          exp: 1
+          money: 0.01
+        acacia_planks:
+          exp: 1
+          money: 0.01
+        acacia_stairs:
+          exp: 1
+          money: 0.01
+        acacia_slab:
+          exp: 1
+          money: 0.01
+        acacia_fence:
+          exp: 1
+          money: 0.01
+        acacia_fence_gate:
+          exp: 1
+          money: 0.01
+        acacia_door:
+          exp: 1
+          money: 0.01
+        acacia_trapdoor:
+          exp: 1
+          money: 0.01
+        # Dark Oak
+        dark_oak_log:
+          exp: 1
+          money: 0.01
+        dark_oak_wood:
+          exp: 1
+          money: 0.01
+        stripped_dark_oak_log:
+          exp: 1
+          money: 0.01
+        stripped_dark_oak_wood:
+          exp: 1
+          money: 0.01
+        dark_oak_planks:
+          exp: 1
+          money: 0.01
+        dark_oak_stairs:
+          exp: 1
+          money: 0.01
+        dark_oak_slab:
+          exp: 1
+          money: 0.01
+        dark_oak_fence:
+          exp: 1
+          money: 0.01
+        dark_oak_fence_gate:
+          exp: 1
+          money: 0.01
+        dark_oak_door:
+          exp: 1
+          money: 0.01
+        dark_oak_trapdoor:
+          exp: 1
+          money: 0.01
+        # Mangrove
+        mangrove_log:
+          exp: 1
+          money: 0.01
+        mangrove_wood:
+          exp: 1
+          money: 0.01
+        stripped_mangrove_log:
+          exp: 1
+          money: 0.01
+        stripped_mangrove_wood:
+          exp: 1
+          money: 0.01
+        mangrove_planks:
+          exp: 1
+          money: 0.01
+        mangrove_stairs:
+          exp: 1
+          money: 0.01
+        mangrove_slab:
+          exp: 1
+          money: 0.01
+        mangrove_fence:
+          exp: 1
+          money: 0.01
+        mangrove_fence_gate:
+          exp: 1
+          money: 0.01
+        mangrove_door:
+          exp: 1
+          money: 0.01
+        mangrove_trapdoor:
+          exp: 1
+          money: 0.01
+        # Cherry
+        cherry_log:
+          exp: 1
+          money: 0.01
+        cherry_wood:
+          exp: 1
+          money: 0.01
+        stripped_cherry_log:
+          exp: 1
+          money: 0.01
+        stripped_cherry_wood:
+          exp: 1
+          money: 0.01
+        cherry_planks:
+          exp: 1
+          money: 0.01
+        cherry_stairs:
+          exp: 1
+          money: 0.01
+        cherry_slab:
+          exp: 1
+          money: 0.01
+        cherry_fence:
+          exp: 1
+          money: 0.01
+        cherry_fence_gate:
+          exp: 1
+          money: 0.01
+        cherry_door:
+          exp: 1
+          money: 0.01
+        cherry_trapdoor:
+          exp: 1
+          money: 0.01
+        # Pale Oak
+        pale_oak_log:
+          exp: 1
+          money: 0.01
+        pale_oak_wood:
+          exp: 1
+          money: 0.01
+        stripped_pale_oak_log:
+          exp: 1
+          money: 0.01
+        stripped_pale_oak_wood:
+          exp: 1
+          money: 0.01
+        pale_oak_planks:
+          exp: 1
+          money: 0.01
+        pale_oak_stairs:
+          exp: 1
+          money: 0.01
+        pale_oak_slab:
+          exp: 1
+          money: 0.01
+        pale_oak_fence:
+          exp: 1
+          money: 0.01
+        pale_oak_fence_gate:
+          exp: 1
+          money: 0.01
+        pale_oak_door:
+          exp: 1
+          money: 0.01
+        pale_oak_trapdoor:
+          exp: 1
+          money: 0.01
+        # Bamboo
+        bamboo_block:
+          exp: 1
+          money: 0.01
+        bamboo_planks:
+          exp: 1
+          money: 0.01
+        bamboo_stairs:
+          exp: 1
+          money: 0.01
+        bamboo_slab:
+          exp: 1
+          money: 0.01
+        bamboo_fence:
+          exp: 1
+          money: 0.01
+        bamboo_fence_gate:
+          exp: 1
+          money: 0.01
+        bamboo_door:
+          exp: 1
+          money: 0.01
+        bamboo_trapdoor:
+          exp: 1
+          money: 0.01
+        # Crimson
+        crimson_stem:
+          exp: 1
+          money: 0.01
+        crimson_hyphae:
+          exp: 1
+          money: 0.01
+        stripped_crimson_stem:
+          exp: 1
+          money: 0.01
+        stripped_crimson_hyphae:
+          exp: 1
+          money: 0.01
+        crimson_planks:
+          exp: 1
+          money: 0.01
+        crimson_stairs:
+          exp: 1
+          money: 0.01
+        crimson_slab:
+          exp: 1
+          money: 0.01
+        crimson_fence:
+          exp: 1
+          money: 0.01
+        crimson_fence_gate:
+          exp: 1
+          money: 0.01
+        crimson_door:
+          exp: 1
+          money: 0.01
+        crimson_trapdoor:
+          exp: 1
+          money: 0.01
+        # Warped
+        warped_stem:
+          exp: 1
+          money: 0.01
+        warped_hyphae:
+          exp: 1
+          money: 0.01
+        stripped_warped_stem:
+          exp: 1
+          money: 0.01
+        stripped_warped_hyphae:
+          exp: 1
+          money: 0.01
+        warped_planks:
+          exp: 1
+          money: 0.01
+        warped_stairs:
+          exp: 1
+          money: 0.01
+        warped_slab:
+          exp: 1
+          money: 0.01
+        warped_fence:
+          exp: 1
+          money: 0.01
+        warped_fence_gate:
+          exp: 1
+          money: 0.01
+        warped_door:
+          exp: 1
+          money: 0.01
+        warped_trapdoor:
+          exp: 1
+          money: 0.01
+        cobblestone:
+          exp: 1
+          money: 0.01
+        mossy_cobblestone:
+          exp: 1
+          money: 0.01
+        cobblestone_slab:
+          exp: 1
+          money: 0.01
+        mossy_cobblestone_slab:
+          exp: 1
+          money: 0.01
+        cobblestone_stairs:
+          exp: 1
+          money: 0.01
+        mossy_cobblestone_stairs:
+          exp: 1
+          money: 0.01
+        cobblestone_wall:
+          exp: 1
+          money: 0.01
+        mossy_cobblestone_wall:
+          exp: 1
+          money: 0.01
+
+        stone_bricks:
+          exp: 1
+          money: 0.01
+        mossy_stone_bricks:
+          exp: 1
+          money: 0.01
+        stone_brick_slab:
+          exp: 1
+          money: 0.01
+        mossy_stone_brick_slab:
+          exp: 1
+          money: 0.01
+        stone_brick_stairs:
+          exp: 1
+          money: 0.01
+        mossy_stone_brick_stairs:
+          exp: 1
+          money: 0.01
+        stone_brick_wall:
+          exp: 1
+          money: 0.01
+        mossy_stone_brick_wall:
+          exp: 1
+          money: 0.01
+        chiseled_stone_bricks:
+          exp: 1
+          money: 0.01
+        andesite:
+          exp: 1
+          money: 0.01
+        polished_andesite:
+          exp: 1
+          money: 0.01
+        andesite_slab:
+          exp: 1
+          money: 0.01
+        polished_andesite_slab:
+          exp: 1
+          money: 0.01
+        andesite_stairs:
+          exp: 1
+          money: 0.01
+        polished_andesite_stairs:
+          exp: 1
+          money: 0.01
+        andesite_wall:
+          exp: 1
+          money: 0.01
+        polished_andesite_wall:
+          exp: 1
+          money: 0.01
+
+        diorite:
+          exp: 1
+          money: 0.01
+        polished_diorite:
+          exp: 1
+          money: 0.01
+        diorite_slab:
+          exp: 1
+          money: 0.01
+        polished_diorite_slab:
+          exp: 1
+          money: 0.01
+        diorite_stairs:
+          exp: 1
+          money: 0.01
+        polished_diorite_stairs:
+          exp: 1
+          money: 0.01
+        diorite_wall:
+          exp: 1
+          money: 0.01
+        polished_diorite_wall:
+          exp: 1
+          money: 0.01
+
+        granite:
+          exp: 1
+          money: 0.01
+        polished_granite:
+          exp: 1
+          money: 0.01
+        granite_slab:
+          exp: 1
+          money: 0.01
+        polished_granite_slab:
+          exp: 1
+          money: 0.01
+        granite_stairs:
+          exp: 1
+          money: 0.01
+        polished_granite_stairs:
+          exp: 1
+          money: 0.01
+        granite_wall:
+          exp: 1
+          money: 0.01
+        polished_granite_wall:
+          exp: 1
+          money: 0.01
+        deepslate:
+          exp: 1
+          money: 0.01
+        deepslate_slab:
+          exp: 1
+          money: 0.01
+        deepslate_stairs:
+          exp: 1
+          money: 0.01
+        deepslate_wall:
+          exp: 1
+          money: 0.01
+        cobbled_deepslate:
+          exp: 1
+          money: 0.01
+        cobbled_deepslate_slab:
+          exp: 1
+          money: 0.01
+        cobbled_deepslate_stairs:
+          exp: 1
+          money: 0.01
+        cobbled_deepslate_wall:
+          exp: 1
+          money: 0.01
+        deepslate_bricks:
+          exp: 1
+          money: 0.01
+        deepslate_brick_slab:
+          exp: 1
+          money: 0.01
+        deepslate_brick_stairs:
+          exp: 1
+          money: 0.01
+        deepslate_brick_wall:
+          exp: 1
+          money: 0.01
+        cracked_deepslate_bricks:
+          exp: 1
+          money: 0.01
+        polished_deepslate:
+          exp: 1
+          money: 0.01
+        polished_deepslate_slab:
+          exp: 1
+          money: 0.01
+        polished_deepslate_stairs:
+          exp: 1
+          money: 0.01
+        polished_deepslate_wall:
+          exp: 1
+          money: 0.01
+        deepslate_tiles:
+          exp: 1
+          money: 0.01
+        deepslate_tile_slab:
+          exp: 1
+          money: 0.01
+        deepslate_tile_stairs:
+          exp: 1
+          money: 0.01
+        deepslate_tile_wall:
+          exp: 1
+          money: 0.01
+        chiseled_deepslate:
+          exp: 1
+          money: 0.01
+        tuff:
+          exp: 1
+          money: 0.01
+        tuff_slab:
+          exp: 1
+          money: 0.01
+        tuff_stairs:
+          exp: 1
+          money: 0.01
+        tuff_wall:
+          exp: 1
+          money: 0.01
+        polished_tuff:
+          exp: 1
+          money: 0.01
+        polished_tuff_slab:
+          exp: 1
+          money: 0.01
+        polished_tuff_stairs:
+          exp: 1
+          money: 0.01
+        polished_tuff_wall:
+          exp: 1
+          money: 0.01
+        chiseled_tuff:
+          exp: 1
+          money: 0.01
+        bricks:
+          exp: 1
+          money: 0.01
+        brick_slab:
+          exp: 1
+          money: 0.01
+        brick_stairs:
+          exp: 1
+          money: 0.01
+        brick_wall:
+          exp: 1
+          money: 0.01
+        mud_bricks:
+          exp: 1
+          money: 0.01
+        mud_brick_slab:
+          exp: 1
+          money: 0.01
+        mud_brick_stairs:
+          exp: 1
+          money: 0.01
+        mud_brick_wall:
+          exp: 1
+          money: 0.01
+        mud:
+          exp: 1
+          money: 0.01
+        resin_bricks:
+          exp: 1
+          money: 0.01
+        resin_brick_slab:
+          exp: 1
+          money: 0.01
+        resin_brick_stairs:
+          exp: 1
+          money: 0.01
+        resin_brick_wall:
+          exp: 1
+          money: 0.01
+        chiseled_resin_bricks:
+          exp: 1
+          money: 0.01
+        sandstone:
+          exp: 1
+          money: 0.01
+        sandstone_slab:
+          exp: 1
+          money: 0.01
+        sandstone_stairs:
+          exp: 1
+          money: 0.01
+        sandstone_wall:
+          exp: 1
+          money: 0.01
+        smooth_sandstone:
+          exp: 1
+          money: 0.01
+        smooth_sandstone_slab:
+          exp: 1
+          money: 0.01
+        smooth_sandstone_stairs:
+          exp: 1
+          money: 0.01
+        cut_sandstone:
+          exp: 1
+          money: 0.01
+        cut_sandstone_slab:
+          exp: 1
+          money: 0.01
+        chiseled_sandstone:
+          exp: 1
+          money: 0.01
+        prismarine:
+          exp: 1
+          money: 0.01
+        prismarine_slab:
+          exp: 1
+          money: 0.01
+        prismarine_stairs:
+          exp: 1
+          money: 0.01
+        prismarine_wall:
+          exp: 1
+          money: 0.01
+        prismarine_bricks:
+          exp: 1
+          money: 0.01
+        prismarine_bricks_slab:
+          exp: 1
+          money: 0.01
+        prismarine_bricks_stairs:
+          exp: 1
+          money: 0.01
+        dark_prismarine:
+          exp: 1
+          money: 0.01
+        dark_prismarine_slab:
+          exp: 1
+          money: 0.01
+        dark_prismarine_stairs:
+          exp: 1
+          money: 0.01
+        sea_lantern:
+          exp: 1
+          money: 0.01
+          
+
+  explorer:
+    name: "<gradient:#FF0000:#A20000>Explorer"
+    bossbar:
+      title: "<yellow><level> <gray>level <job> <gradient:#6D6666:#938B8B:#777676>+<gained_exp><symbol_exp> <exp>/<next_exp>"
+      levelup: "<gradient:#5DFF00:#E8FF00:{phase}>You have reached <bold><level></bold>. level in <job> skill."
+      overlay: NOTCHED_10
+      color: RED
+    icon: COMPASS
+    levelup_message:
+      #chat: ""
+      sound: entity.player.levelup
+    level_equation: "<next_level>*<next_level>*5"
+    actions:
+      travel:
+        10:  #this being the amount of blocks travelled in any direction
+          exp: 1
+          money: 0.01

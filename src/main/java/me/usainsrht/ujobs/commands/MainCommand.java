@@ -19,6 +19,7 @@ import me.usainsrht.ujobs.utils.JobExpUtils;
 import me.usainsrht.ujobs.utils.MessageUtil;
 import me.usainsrht.ujobs.yaml.YamlCommand;
 import net.kyori.adventure.text.Component;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -68,7 +69,7 @@ public class MainCommand {
                                         plugin.getLogger().severe("Migration failed: " + e.getMessage());
                                     }
                                     // Notify sender on the main thread when done
-                                    Bukkit.getScheduler().runTask(plugin, () -> context.getSource().getSender().sendMessage(Component.text("§a[UJobs] Migration complete! All player data has been migrated to the database.")));
+                                        Bukkit.getScheduler().runTask(plugin, () -> context.getSource().getSender().sendMessage(Component.text("§a[UJobs] Migration complete! All player data has been migrated to the database.")));
                                 });
                             } else {
                                 context.getSource().getSender().sendMessage(Component.text("§c[UJobs] Error: Storage is not using SQLite! Migration only works with SQLite storage."));
@@ -77,6 +78,83 @@ public class MainCommand {
 
                             return Command.SINGLE_SUCCESS;
                         })
+                )
+                .then(Commands.literal("clear")
+                    .requires(context -> context.getSender().isOp())
+                        // /ujobs clear <job> -> warn and instruct to use confirm
+                        .then(Commands.argument("job", StringArgumentType.word())
+                                .suggests((context, builder) -> {
+                                    plugin.getJobManager().getJobs().keySet().forEach(builder::suggest);
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> {
+                                    String jobId = StringArgumentType.getString(context, "job");
+                                    if (!plugin.getJobManager().getJobs().containsKey(jobId)) {
+                                        context.getSource().getSender().sendMessage(Component.text("Job not found: " + jobId));
+                                        return -1;
+                                    }
+                                    context.getSource().getSender().sendMessage(Component.text("This will permanently clear all stats for job: " + jobId));
+                                    context.getSource().getSender().sendMessage(Component.text("Run /" + yamlCommand.getName() + " clear confirm " + jobId + " to proceed."));
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        )
+                        // /ujobs clear confirm <job> -> perform deletion
+                        .then(Commands.literal("confirm")
+                                .then(Commands.argument("job", StringArgumentType.word())
+                                        .suggests((context, builder) -> {
+                                            plugin.getJobManager().getJobs().keySet().forEach(builder::suggest);
+                                            return builder.buildFuture();
+                                        })
+                                        .executes(context -> {
+                                            String jobId = StringArgumentType.getString(context, "job");
+                                            if (!plugin.getJobManager().getJobs().containsKey(jobId)) {
+                                                context.getSource().getSender().sendMessage(Component.text("Job not found: " + jobId));
+                                                return -1;
+                                            }
+
+                                            if (!(plugin.getStorage() instanceof me.usainsrht.ujobs.storage.SqliteStorage sqlite)) {
+                                                context.getSource().getSender().sendMessage(Component.text("This command only works with SQLite storage."));
+                                                return -1;
+                                            }
+
+                                            try {
+                                                sqlite.ensureDatabase();
+                                                java.sql.Connection conn = sqlite.getDbConnection();
+                                                if (conn == null) {
+                                                    context.getSource().getSender().sendMessage(Component.text("Database not available."));
+                                                    return -1;
+                                                }
+
+                                                try (java.sql.PreparedStatement ps = conn.prepareStatement("DELETE FROM player_jobs WHERE job_id = ?")) {
+                                                    ps.setString(1, jobId);
+                                                    int deleted = ps.executeUpdate();
+                                                    context.getSource().getSender().sendMessage(Component.text("[UJobs] Cleared " + deleted + " database rows for job " + jobId));
+                                                }
+
+                                                // Also remove job stats from in-memory sqlite cache so runtime reflects change
+                                                try {
+                                                    for (me.usainsrht.ujobs.models.PlayerJobData pjd : sqlite.getCache().values()) {
+                                                        if (pjd != null) pjd.getJobStats().remove(jobId);
+                                                    }
+                                                } catch (Exception ignored) {}
+
+                                                // Remove job entries from leaderboard caches and rebuild leaderboard for this job
+                                                try {
+                                                    plugin.getLeaderboardManager().getLeaderboardPlayerCache().forEach((uuid, pld) -> pld.getLeaderboardStats().remove(plugin.getJobManager().getJobs().get(jobId)));
+                                                    UUID[] rebuilt = plugin.getLeaderboardManager().createLeaderboard(plugin.getJobManager().getJobs().get(jobId));
+                                                    plugin.getLeaderboardManager().getLeaderboardJobCache().put(plugin.getJobManager().getJobs().get(jobId), rebuilt == null ? new UUID[plugin.getConfig().getInt("leaderboard.calculate_top", 100)] : rebuilt);
+                                                } catch (Exception ignored) {}
+
+                                            } catch (Exception e) {
+                                                plugin.getLogger().severe("Failed to clear job data for " + jobId + ": " + e.getMessage());
+                                                context.getSource().getSender().sendMessage(Component.text("[UJobs] Error clearing job data: " + e.getMessage()));
+                                                return -1;
+                                            }
+
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                )
+                        )
                 )
                 .then(Commands.literal("addexp")
                         .requires(context -> context.getSender().hasPermission("ujobs.admin.addexp"))
@@ -161,6 +239,42 @@ public class MainCommand {
                                                 })
                                         )
                                 )
+                        )
+                )
+                .then(Commands.literal("bossbar")
+                        .requires(context -> context.getSender().hasPermission("ujobs.admin.bossbar"))
+                        .then(Commands.literal("toggle")
+                                .executes(context -> {
+                                    boolean current = plugin.getConfig().getBoolean("bossbar.enabled", true);
+                                    plugin.getConfig().set("bossbar.enabled", !current);
+                                    plugin.saveConfig();
+                                    if (current) {
+                                        // was enabled, now disabled -> remove all boss bars
+                                        try { plugin.getBossBarManager().removeAllBossBars(); } catch (Exception ignored) {}
+                                    }
+                                    plugin.getConfigManager().loadConfigs();
+                                    context.getSource().getSender().sendMessage(Component.text("[UJobs] bossbar.enabled set to " + !current));
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        )
+                        .then(Commands.literal("enable")
+                                .executes(context -> {
+                                    plugin.getConfig().set("bossbar.enabled", true);
+                                    plugin.saveConfig();
+                                    plugin.getConfigManager().loadConfigs();
+                                    context.getSource().getSender().sendMessage(Component.text("[UJobs] bossbar.enabled set to true"));
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        )
+                        .then(Commands.literal("disable")
+                                .executes(context -> {
+                                    plugin.getConfig().set("bossbar.enabled", false);
+                                    plugin.saveConfig();
+                                    try { plugin.getBossBarManager().removeAllBossBars(); } catch (Exception ignored) {}
+                                    plugin.getConfigManager().loadConfigs();
+                                    context.getSource().getSender().sendMessage(Component.text("[UJobs] bossbar.enabled set to false and removed all boss bars"));
+                                    return Command.SINGLE_SUCCESS;
+                                })
                         )
                 )
                 .build();

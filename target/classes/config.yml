@@ -1,0 +1,226 @@
+expinfo:
+  list_in_lore: 15
+  gui:
+    title: "<gradient:#562d1d:#4c243c>Stats ➢ Leaderboard ➣ <gradient:#ce1e92:#aa00ff>Info"
+    blank_material: MAGENTA_STAINED_GLASS_PANE
+    jobitem:
+      name: "<job>"
+      lore:
+        - " <primary><1_action_value> <secondary><1_exp><gray><symbol_exp> <primary><1_money><gray><symbol_money> "
+        - " <primary><2_action_value> <secondary><2_exp><gray><symbol_exp> <primary><2_money><gray><symbol_money> "
+        - " <primary><3_action_value> <secondary><3_exp><gray><symbol_exp> <primary><3_money><gray><symbol_money> "
+        - " <primary><4_action_value> <secondary><4_exp><gray><symbol_exp> <primary><4_money><gray><symbol_money> "
+        - " <primary><5_action_value> <secondary><5_exp><gray><symbol_exp> <primary><5_money><gray><symbol_money> "
+        - " <primary><6_action_value> <secondary><6_exp><gray><symbol_exp> <primary><6_money><gray><symbol_money> "
+        - " <primary><7_action_value> <secondary><7_exp><gray><symbol_exp> <primary><7_money><gray><symbol_money> "
+        - " <primary><8_action_value> <secondary><8_exp><gray><symbol_exp> <primary><8_money><gray><symbol_money> "
+        - " <primary><9_action_value> <secondary><9_exp><gray><symbol_exp> <primary><9_money><gray><symbol_money> "
+        - " <primary><10_action_value> <secondary><10_exp><gray><symbol_exp> <primary><10_money><gray><symbol_money> "
+        - " <primary><11_action_value> <secondary><11_exp><gray><symbol_exp> <primary><11_money><gray><symbol_money> "
+        - " <primary><12_action_value> <secondary><12_exp><gray><symbol_exp> <primary><12_money><gray><symbol_money> "
+        - " <primary><13_action_value> <secondary><13_exp><gray><symbol_exp> <primary><13_money><gray><symbol_money> "
+        - " <primary><14_action_value> <secondary><14_exp><gray><symbol_exp> <primary><14_money><gray><symbol_money> "
+        - " <primary><15_action_value> <secondary><15_exp><gray><symbol_exp> <primary><15_money><gray><symbol_money> "
+        - ""
+        - " <primary>LEFT ↓ <dark_gray>| <secondary>RIGHT ↑ "
+        - " <gold>ℹ <primary>SHIFT <gray>click multiplies by 5."
+leaderboard:
+  calculate_top: 100
+  list_in_lore: 10
+  gui:
+    title: "<gradient:#562d1d:#51282d>Stats ➢ <gradient:#e43050:#d32283>Leaderboard ➣ <gradient:#4b243e:#431d56>Info"
+    blank_material: RED_STAINED_GLASS_PANE
+    jobitem:
+      name: "<job> <dark_gray>(<primary><min> <gray>to <secondary><max><dark_gray>)"
+      lore:
+        - " <primary><bold><1_position>.</bold> <1_displayname> <secondary><1_level> <gray>level "
+        - " <primary><bold><2_position>.</bold> <2_displayname> <secondary><2_level> <gray>level "
+        - " <primary><bold><3_position>.</bold> <3_displayname> <secondary><3_level> <gray>level "
+        - " <primary><bold><4_position>.</bold> <4_displayname> <secondary><4_level> <gray>level "
+        - " <primary><bold><5_position>.</bold> <5_displayname> <secondary><5_level> <gray>level "
+        - " <primary><bold><6_position>.</bold> <6_displayname> <secondary><6_level> <gray>level "
+        - " <primary><bold><7_position>.</bold> <7_displayname> <secondary><7_level> <gray>level "
+        - " <primary><bold><8_position>.</bold> <8_displayname> <secondary><8_level> <gray>level "
+        - " <primary><bold><9_position>.</bold> <9_displayname> <secondary><9_level> <gray>level "
+        - " <primary><bold><10_position>.</bold> <10_displayname> <secondary><10_level> <gray>level "
+        - " <gray>You are <primary><level> <gray>level and ranked <secondary><position><gray>."
+        - ""
+        - ""
+        - " <primary>LEFT ↓ <dark_gray>| <secondary>RIGHT ↑ "
+        - " <gold>ℹ <primary>SHIFT <gray>click multiplies by 5."
+gui:
+  change_page_cooldown: 40
+  title: "<gradient:#FF4600:#e93442>Stats <gradient:#51282d:#431d56>➢ Leaderboard ➣ Info"
+  blank_material: ORANGE_STAINED_GLASS_PANE
+  jobitem:
+    name: "<job>"
+    lore:
+      - " <gradient:#6D6666:#938B8B:#777676><exp>/<next_exp> "
+      - " <primary><level> <progress> <secondary><next_level> "
+      - ""
+      - " <gray>In <job> <gray>skill: "
+      - "  <gray>you are <primary><position><gray>. on the leaderboard."
+      - "  <gray>so far you have earned <primary><total_money><money_symbol><gray>."
+      - ""
+      - " <gray>Click <primary>LEFT <gray>to go to Leaderboard."
+      - " <gray>Click <primary>RIGHT <gray>to go to Info."
+  navigation:
+    left:
+      material: ARROW
+      name: "<yellow><-"
+    right:
+      material: ARROW
+      name: "<yellow>->"
+
+# Global boss bar toggle. Set to false to disable all boss bars.
+bossbar:
+  enabled: true
+
+# players with these gamemodes will not gain exp/money from jobs
+ignored_gamemodes:
+  - SPECTATOR
+  #- CREATIVE
+
+# materials that will not count when mined with a tool with silk touch.
+silktouch_blacklist:
+  - DIAMOND_ORE
+  - DEEPSLATE_DIAMOND_ORE
+
+command:
+  name: "jobs"
+  #if permission is omitted, everyone can use the command
+  #permission: "ujobs.command"
+  description: "main command for Jobs"
+  aliases:
+    - "job"
+    - "ujob"
+    - "ujobs"
+    - "skill"
+    - "skills"
+
+messages:
+  reload: "<green>reloaded!"
+  page_turn:
+    sound: item.book.page_turn
+  leaderboard_take_lead:
+    chat: "<displayname> <gray>reached <primary><level> <gray>level in <job> skill and took <secondary><bold>1st</bold><gray> place from <opponent_displayname><gray>."
+    sound: entity.ravager.celebrate
+  leaderboard_get_in_top_10:
+    chat: "<displayname> <gray>reached <primary><level> <gray>level in <job> skill and entered the top <secondary><bold>10</bold><gray>."
+    sound: entity.vindicator.celebrate
+  leaderboard_your_position_taken: "<displayname> <gray>reached <primary><level> <gray>level in <job> skill and took your <secondary><bold><position>.</bold> <gray>place."
+  leaderboard_take_someones_position:
+    chat: "<gray>You passed <opponent_displayname> in <job> skill and became <secondary><bold><position>.</bold><gray>."
+    sound: entity.pillager.celebrate
+
+symbols:
+  money: '$'
+  exp: xp
+
+actions:
+  travel: "<gray>Travel</gray> <value> blocks"
+  place: "<gray>Place</gray> <value>"
+  kill: "<gray>Kill</gray> <value>"
+  breed: "<gray>Breed</gray> <value>"
+  break: "<gray>Break</gray> <value>"
+  tame: "<gray>Tame</gray> <value>"
+  fish: "<gray>Catch</gray> <value>"
+  enchant: "<gray>Apply <value> enchant</gray>"
+  anvil_merge: "<gray>Merge <value> in anvil</gray>"
+  generate_loot: "<gray>Open <value> chest</gray>"
+  raid: "<gray>Defend</gray> <value>"
+  craft: "<gray>Craft</gray> <value>"
+  trade: "<gray>Trade</gray> <value>"
+  harvest: "<gray>Harvest</gray> <value>"
+  smelt: "<gray>Smelt</gray> <value>"
+
+special_values:
+  1: "1 Level"
+  2: "2 Level"
+  3: "3 Level"
+  4: "4 Level"
+  5: "5 Level"
+  6: "6 Level"
+  7: "7 Level"
+  8: "8 Level"
+  9: "9 Level"
+  10: "10 Level"
+  11: "11 Level"
+  12: "12 Level"
+  13: "13 Level"
+  14: "14 Level"
+  15: "15 Level"
+  16: "16 Level"
+  17: "17 Level"
+  18: "18 Level"
+  19: "19 Level"
+  20: "20 Level"
+  21: "21 Level"
+  22: "22 Level"
+  23: "23 Level"
+  24: "24 Level"
+  25: "25 Level"
+  26: "26 Level"
+  27: "27 Level"
+  28: "28 Level"
+  29: "29 Level"
+  30: "30 Level"
+
+  win: "Full Village Raid"
+  wave: "Village Raid Wave"
+
+  desert_pyramid: "Desert Temple"
+  abandoned_mineshaft: "Abandoned Mineshaft"
+  ancient_city: "Ancient City"
+  ancient_city_ice_box: "Ancient City"
+  bastion_bridge: "Bastion Bridge"
+  bastion_other: "Bastion Remnant"
+  bastion_treasure: "Bastion Treasure"
+  buried_treasure: "Buried Treasure"
+  end_city_treasure: "End City"
+  igloo_chest: "Igloo"
+  jungle_temple: "Jungle Temple"
+  pillager_outpost: "Pillager Outpost"
+  ruined_portal: "Ruined Portal"
+  shipwreck_map: "Shipwreck Map"
+  shipwreck_supply: "Shipwreck"
+  shipwreck_treasure: "Shipwreck Treasure"
+  simple_dungeon: "Dungeon"
+  stronghold_corridor: "Stronghold Corridor"
+  stronghold_crossing: "Stronghold"
+  stronghold_library: "Stronghold Library"
+  underwater_ruin_big: "Large Underwater Ruin"
+  underwater_ruin_small: "Underwater Ruin"
+  village/village_armorer: "Armorer Villager"
+  village/village_butcher: "Butcher Villager"
+  village/village_cartographer: "Cartographer Villager"
+  village/village_desert_house: "Desert Village"
+  village/village_fisher: "Fisherman Villager"
+  village/village_fletcher: "Fletcher Villager"
+  village/village_mason: "Mason Villager"
+  village/village_plains_house: "Plains Village"
+  village/village_savanna_house: "Savanna Village"
+  village/village_shepherd: "Shepherd Villager"
+  village/village_snowy_house: "Snowy Village"
+  village/village_taiga_house: "Taiga Village"
+  village/village_tannery: "Leatherworker Villager"
+  village/village_temple: "Cleric Villager"
+  village/village_toolsmith: "Toolsmith Villager"
+  village/village_weaponsmith: "Weaponsmith Villager"
+  woodland_mansion: "Woodland Mansion"
+  bastion_hoglin_stable: "Bastion Hoglin Stable"
+  jungle_temple_dispenser: "Jungle Temple Dispenser"
+  nether_bridge: "Nether Bridge"
+  trial_chambers/corridor: "Trial Chamber Corridor"
+  trial_chambers/entrance: "Trial Chamber Entrance"
+  trial_chambers/intersection: "Trial Chamber Intersection"
+  trial_chambers/intersection_barrel: "Trial Chamber Intersection Barrel"
+  trial_chambers/reward: "Trial Chamber Reward"
+  trial_chambers/reward_common: "Trial Chamber Common Reward"
+  trial_chambers/reward_ominous: "Trial Chamber Ominous Reward"
+  trial_chambers/reward_ominous_common: "Trial Chamber Ominous Common Reward"
+  trial_chambers/reward_ominous_rare: "Trial Chamber Ominous Rare Reward"
+  trial_chambers/reward_ominous_unique: "Trial Chamber Ominous Unique Reward"
+  trial_chambers/reward_rare: "Trial Chamber Rare Reward"
+  trial_chambers/reward_unique: "Trial Chamber Unique Reward"
+  trial_chambers/supply: "Trial Chamber Supply"

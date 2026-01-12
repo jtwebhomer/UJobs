@@ -48,8 +48,12 @@ public class LeaderboardGUI implements JobGUI {
         // Fill with blank items
         String blankMaterial = plugin.getConfig().getString("leaderboard.gui.blank_material", null);
         if (blankMaterial != null && !blankMaterial.isEmpty() && !blankMaterial.equalsIgnoreCase("air")) {
-            ItemStack blankItem = new ItemStack(Material.matchMaterial(blankMaterial));
-            blankItem.editMeta(meta -> meta.setHideTooltip(true));
+            Material m = Material.matchMaterial(blankMaterial);
+            if (m == null) m = Material.STONE;
+            ItemStack blankItem = new ItemStack(m);
+            if (blankItem.getItemMeta() != null) {
+                blankItem.editMeta(meta -> meta.setHideTooltip(true));
+            }
             for (int i = 0; i < inventory.getSize(); i++) {
                 inventory.setItem(i, blankItem);
             }
@@ -133,13 +137,15 @@ public class LeaderboardGUI implements JobGUI {
         }
 
         // Create item stack
-        ItemStack itemStack = new ItemStack(job.getIcon());
+        Material iconMat = job.getIcon() != null ? job.getIcon() : Material.STONE;
+        ItemStack itemStack = new ItemStack(iconMat);
+        if (itemStack.getItemMeta() == null) return itemStack;
         ItemMeta meta = itemStack.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         // Store min value in PDC for click handling
-        meta.getPersistentDataContainer().set(minKey, PersistentDataType.INTEGER, min);
-        meta.getPersistentDataContainer().set(jobKey, PersistentDataType.STRING, jobId);
+        try { meta.getPersistentDataContainer().set(minKey, PersistentDataType.INTEGER, min); } catch (Exception ignored) {}
+        try { meta.getPersistentDataContainer().set(jobKey, PersistentDataType.STRING, jobId); } catch (Exception ignored) {}
 
         Set<TagResolver> placeholderSet = new HashSet<>();
 
@@ -224,7 +230,7 @@ public class LeaderboardGUI implements JobGUI {
         String displayNameConfig = plugin.getConfig().getString("leaderboard.gui.jobitem.name");
         Component componentDisplayName = plugin.getMiniMessage().deserialize(displayNameConfig, placeholders)
                 .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
-        meta.displayName(componentDisplayName);
+        try { meta.displayName(componentDisplayName); } catch (Exception ignored) {}
 
         // Set lore
         List<Component> lore = new ArrayList<>();
@@ -239,7 +245,7 @@ public class LeaderboardGUI implements JobGUI {
         lore.add(Component.empty()); // Empty line at end
         meta.lore(lore);
 
-        itemStack.setItemMeta(meta);
+        try { itemStack.setItemMeta(meta); } catch (Exception ignored) {}
         return itemStack;
     }
 
